@@ -6,7 +6,7 @@ setup(
     description='A short description of the package',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/yourusername/my_package',  # Your package URL
+    url='https://github.com/DanielRodriguez-SS/reqease.git',
     author='Daniel Rodriguez',
     author_email='danielrodriguezmarin@me.com',
     license='MIT',
