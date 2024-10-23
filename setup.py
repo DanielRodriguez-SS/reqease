@@ -2,8 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name='reqease',
-    version='0.1',
-    description='A short description of the package',
+    version='0.1.0',
+    description="""Reqease is a lean and clean library for performing basic HTTP
+                   operations with minimal overhead, designed to simplify common
+                   tasks like GET and POST requests""",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/DanielRodriguez-SS/reqease.git',
