@@ -11,11 +11,13 @@ setup(
     author_email='danielrodriguezmarin@me.com',
     license='MIT',
     packages=find_packages(),  # Automatically finds subpackages
-    install_requires=[],  # List of dependencies
+    install_requires=[
+        'certifi',
+    ],  # List of dependencies
     classifiers=[  # Classifiers for PyPI
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.6',  # Minimum Python version
+    python_requires='>=3.6',
 )
