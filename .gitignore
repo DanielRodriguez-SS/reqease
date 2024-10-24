@@ -2,4 +2,4 @@
 .vscode
 *.sh
 dist
-reqease.egg-info
+*.egg-info/
