@@ -48,7 +48,7 @@ print("Body (as string):", response.body_str)
 
 ### Example 2: Using get With Custom Headers:
 
-In this example, we specify custom headers for the GET request, including a `User-Agent` and `Accept` header.
+In this example, we specify custom headers for the GET request, including a `Authorization` and `Accept` header.
 
 ```python
 import reqease
