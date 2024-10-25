@@ -27,27 +27,67 @@ pip install reqease
 
 You can use the `get` function to fetch data from a URL over HTTPS:
 
-### Example:
+### Example 1: Using get Without Headers:
+
+This example sends a basic GET request without any headers.
 
 ```python
 import reqease
 
-# Fetch data from a URL
+# Define the URL
 url = "https://jsonplaceholder.typicode.com/posts/1"
+
+# Send the request and capture the response
 response = reqease.get(url)
 
-# Display the response status code
-print(f"Status Code: {response.status_code}")
+# Access and print details from the response
+print("Status Code:", response.status_code)
+print("Response Headers:", response.headers)
+print("Body (as string):", response.body_str)
+```
 
-# Display the response body as a string
-print(f"Body: {response.body_str}")
+### Example 2: Using get With Custom Headers:
+
+In this example, we specify custom headers for the GET request, including a `User-Agent` and `Accept` header.
+
+```python
+import reqease
+# Define the URL and custom headers
+url = "https://jsonplaceholder.typicode.com/posts/1"
+headers = {
+    "Authorization": "Bearer your_access_token",
+    "Accept": "application/json"
+}
+
+# Send the request and capture the response
+response = reqease.get(url, headers)
+
+# Access and print details from the response
+print("Status Code:", response.status_code)
+print("Response Headers:", response.headers)
+print("Body (as string):", response.body_str)
 ```
 
 ## Save URL Content to a File
 
-The `to_file` function fetches data from a given URL and saves the content to a specified file.
+The `to_file` function fetches content from a specified URL and saves it to a file. If the file path ends with .json, the content is saved as a formatted JSON file; otherwise, it’s saved as plain text.
 
-### Example:
+### Example 1: Saving Content as a JSON File
+
+```python
+import reqease
+
+# Define the URL and the file path
+url = "https://jsonplaceholder.typicode.com/posts/1"
+file_path = "output.json"
+
+# This will save the content from the URL to 'output.json' in JSON format.
+reqease.to_file(url, file_path)
+
+print(f"Content saved to {file_path}")
+```
+
+### Example 2: Saving Content as Plain Text
 
 ```python
 import reqease
@@ -56,17 +96,36 @@ import reqease
 url = "https://jsonplaceholder.typicode.com/posts/1"
 file_path = "output.txt"
 
-# Save the content of the URL to a file
+# This will save the content from the URL to 'output.json' in JSON format.
 reqease.to_file(url, file_path)
+
+print(f"Content saved to {file_path}")
+```
+
+### Example 3: Adding Custom Headers
+
+```python
+import reqease
+
+# Define the URL, the file path and headers
+url = "https://jsonplaceholder.typicode.com/posts/1"
+file_path = "output.json"
+headers = {
+    "Authorization": "Bearer your_access_token",
+    "Accept": "application/json"
+}
+
+# This will save the content from the URL to 'output.json' in JSON format.
+reqease.to_file(url, file_path, headers)
 
 print(f"Content saved to {file_path}")
 ```
 
 ## Fetch JSON Data from a URL
 
-The `to_json` function retrieves JSON data from a specified URL and returns it as a Python object (dictionary or list).
+The `to_dict` function sends an HTTPS GET request to the specified URL, parses the response as JSON, and returns the data as a Python dictionary. This is useful when you expect the response to be in JSON format and want to work with it programmatically in Python.
 
-### Example:
+### Example 1: Fetching JSON from a URL
 
 ```python
 import reqease
@@ -74,10 +133,29 @@ import reqease
 # Define the URL containing JSON data
 url = "https://jsonplaceholder.typicode.com/posts"
 
-# Fetch and parse the JSON data from the URL
-data = reqease.to_json(url)
+# This sends a GET request and returns the JSON data as a Python dictionary.
+data = reqease.to_dict(url)
+print(data)
 
-# Display the fetched JSON data
+# Access specific fields in the JSON object (if applicable)
+for post in data:
+    print(f"Post ID: {post['id']}, Title: {post['title']}")
+```
+
+### Example 2: Adding Custom Headers
+
+```python
+import reqease
+
+# Define the URL containing JSON data
+url = "https://jsonplaceholder.typicode.com/posts"
+headers = {
+    "Authorization": "Bearer your_access_token",
+    "Accept": "application/json"
+}
+
+# This sends a GET request and returns the JSON data as a Python dictionary.
+data = reqease.to_dict(url, headers)
 print(data)
 
 # Access specific fields in the JSON object (if applicable)
