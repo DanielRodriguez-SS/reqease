@@ -1,3 +1,2 @@
-from .http_get import (get,
-                       to_file,
-                       to_dict)
+from .http_get import Get
+from .http_post import Post
