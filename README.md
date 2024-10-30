@@ -25,9 +25,9 @@ pip install reqease
 
 ## Simple GET Request
 
-You can use the `get` function to fetch data from a URL over HTTPS:
+You can use the `Get` class to fetch data from a URL over HTTPS:
 
-### Example 1: Using get Without Headers:
+### Example 1: Using Get Without Headers:
 
 This example sends a basic GET request without any headers.
 
@@ -38,7 +38,7 @@ import reqease
 url = "https://jsonplaceholder.typicode.com/posts/1"
 
 # Send the request and capture the response
-response = reqease.get(url)
+response = reqease.Get(url).response
 
 # Access and print details from the response
 print("Status Code:", response.status_code)
@@ -46,7 +46,7 @@ print("Response Headers:", response.headers)
 print("Body (as string):", response.body_str)
 ```
 
-### Example 2: Using get With Custom Headers:
+### Example 2: Using Get With Custom Headers:
 
 In this example, we specify custom headers for the GET request, including a `Authorization` and `Accept` header.
 
@@ -60,7 +60,7 @@ headers = {
 }
 
 # Send the request and capture the response
-response = reqease.get(url, headers)
+response = reqease.Get(url, headers).response
 
 # Access and print details from the response
 print("Status Code:", response.status_code)
@@ -68,99 +68,132 @@ print("Response Headers:", response.headers)
 print("Body (as string):", response.body_str)
 ```
 
-## Save URL Content to a File
+## Simple POST Request
 
-The `to_file` function fetches content from a specified URL and saves it to a file. If the file path ends with .json, the content is saved as a formatted JSON file; otherwise, it’s saved as plain text.
+You can use the `Post` class to send data to a server over HTTPS:
 
-### Example 1: Saving Content as a JSON File
+### Example 1: Using Post Without Headers
 
-```python
-import reqease
-
-# Define the URL and the file path
-url = "https://jsonplaceholder.typicode.com/posts/1"
-file_path = "output.json"
-
-# This will save the content from the URL to 'output.json' in JSON format.
-reqease.to_file(url, file_path)
-
-print(f"Content saved to {file_path}")
-```
-
-### Example 2: Saving Content as Plain Text
+This example sends a basic POST request with data without any custom headers.
 
 ```python
 import reqease
 
-# Define the URL and the file path
-url = "https://jsonplaceholder.typicode.com/posts/1"
-file_path = "output.txt"
-
-# This will save the content from the URL to 'output.json' in JSON format.
-reqease.to_file(url, file_path)
-
-print(f"Content saved to {file_path}")
-```
-
-### Example 3: Adding Custom Headers
-
-```python
-import reqease
-
-# Define the URL, the file path and headers
-url = "https://jsonplaceholder.typicode.com/posts/1"
-file_path = "output.json"
-headers = {
-    "Authorization": "Bearer your_access_token",
-    "Accept": "application/json"
-}
-
-# This will save the content from the URL to 'output.json' in JSON format.
-reqease.to_file(url, file_path, headers)
-
-print(f"Content saved to {file_path}")
-```
-
-## Fetch JSON Data from a URL
-
-The `to_dict` function sends an HTTPS GET request to the specified URL, parses the response as JSON, and returns the data as a Python dictionary. This is useful when you expect the response to be in JSON format and want to work with it programmatically in Python.
-
-### Example 1: Fetching JSON from a URL
-
-```python
-import reqease
-
-# Define the URL containing JSON data
+# Define the URL and the data to be sent
 url = "https://jsonplaceholder.typicode.com/posts"
+data = {"title": "foo", "body": "bar", "userId": 1}
 
-# This sends a GET request and returns the JSON data as a Python dictionary.
-data = reqease.to_dict(url)
-print(data)
+# Send the request and capture the response
+response = reqease.Post(url, data).response
 
-# Access specific fields in the JSON object (if applicable)
-for post in data:
-    print(f"Post ID: {post['id']}, Title: {post['title']}")
+# Access and print details from the response
+print("Status Code:", response.status_code)
+print("Response Headers:", response.headers)
+print("Body (as string):", response.body_str)
 ```
 
-### Example 2: Adding Custom Headers
+### Example 2: Using Post With Headers
+
+This example sends a basic POST request with data without any custom headers.
 
 ```python
 import reqease
 
-# Define the URL containing JSON data
+# Define the URL, data, and headers
 url = "https://jsonplaceholder.typicode.com/posts"
-headers = {
-    "Authorization": "Bearer your_access_token",
-    "Accept": "application/json"
-}
+data = {"title": "foo", "body": "bar", "userId": 1}
+headers = {"Content-Type": "application/json"}
 
-# This sends a GET request and returns the JSON data as a Python dictionary.
-data = reqease.to_dict(url, headers)
-print(data)
+# Send the request and capture the response
+response = reqease.Post(url, data, headers=headers).response
 
-# Access specific fields in the JSON object (if applicable)
-for post in data:
-    print(f"Post ID: {post['id']}, Title: {post['title']}")
+# Access and print details from the response
+print("Status Code:", response.status_code)
+print("Response Headers:", response.headers)
+print("Body (as string):", response.body_str)
+```
+
+## Using Shared Methods
+
+### Converting Response to Dictionary
+
+Both the `Get` and `Post` classes provide a property called `to_dict`, which allows you to convert the response body to a Python dictionary. This is particularly useful when the response is in JSON format.
+
+### Example: Using `to_dict` with Get
+
+```python
+import reqease
+
+# Define the URL
+url = "https://jsonplaceholder.typicode.com/posts/1"
+
+# Send the request and capture the response to a dictionary
+data = reqease.Get(url).to_dict
+
+# Access and print details from the dictionary
+print("Data as Dictionary:", data)
+```
+
+### Example: Using `to_dict` with Post
+
+When sending JSON data with the Post class, be sure to include the appropriate headers.
+
+```python
+import reqease
+
+# Define the URL and the data to be sent
+url = "https://jsonplaceholder.typicode.com/posts"
+data = {"title": "foo", "body": "bar", "userId": 1}
+
+# Define headers with Content-Type for JSON
+headers = {"Content-Type": "application/json"}
+
+# Send the request and capture the response to a dictionary
+data = Post(url, data, headers).to_dict
+
+# Access and print details from the dictionary
+print("Data as Dictionary:", data)
+```
+
+### Saving Response to a File
+
+Both the `Get` and `Post` classes include a method called `to_file`, which allows you to save the response body to a file. The method automatically formats the output based on the content type of the response.
+
+### Example: Using `to_file` with Get
+
+```python
+import reqease
+
+# Define the URL
+url = "https://jsonplaceholder.typicode.com/posts/1"
+
+# Save the response to a JSON file
+reqease.Get(url).to_file("data.json")
+
+# You can also save as plain text
+reqease.Get(url).to_file("data.txt")
+```
+
+### Example: Using `to_file` with Post
+
+When sending JSON data with the Post class, you can also save the response using the to_file
+method.
+
+```python
+import reqease
+
+# Define the URL and the data to be sent
+url = "https://jsonplaceholder.typicode.com/posts"
+data = {"title": "foo", "body": "bar", "userId": 1}
+
+# Define headers with Content-Type for JSON
+headers = {"Content-Type": "application/json"}
+
+# Save the response to a JSON file
+reqease.Post(url, data, headers).to_file("data.json")
+
+# You can also save as plain text
+reqease.Post(url, data, headers).to_file("data.txt")
 ```
 
 # Dependencies
