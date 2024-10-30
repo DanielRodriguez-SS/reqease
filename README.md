@@ -119,7 +119,7 @@ print("Body (as string):", response.body_str)
 
 Both the `Get` and `Post` classes provide a property called `to_dict`, which allows you to convert the response body to a Python dictionary. This is particularly useful when the response is in JSON format.
 
-### Example: Using `to_dict` with Get
+### Example 1: Using `to_dict` with Get
 
 ```python
 import reqease
@@ -134,7 +134,7 @@ data = reqease.Get(url).to_dict
 print("Data as Dictionary:", data)
 ```
 
-### Example: Using `to_dict` with Post
+### Example 2: Using `to_dict` with Post
 
 When sending JSON data with the Post class, be sure to include the appropriate headers.
 
@@ -159,7 +159,7 @@ print("Data as Dictionary:", data)
 
 Both the `Get` and `Post` classes include a method called `to_file`, which allows you to save the response body to a file. The method automatically formats the output based on the content type of the response.
 
-### Example: Using `to_file` with Get
+### Example 1: Using `to_file` with Get
 
 ```python
 import reqease
@@ -174,7 +174,7 @@ reqease.Get(url).to_file("data.json")
 reqease.Get(url).to_file("data.txt")
 ```
 
-### Example: Using `to_file` with Post
+### Example 2: Using `to_file` with Post
 
 When sending JSON data with the Post class, you can also save the response using the to_file
 method.
