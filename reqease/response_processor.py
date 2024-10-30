@@ -1,5 +1,5 @@
 import json
-from protocols import ResponseProtocol
+from .protocols import ResponseProtocol
 
 class ResponseProcessor:
     """

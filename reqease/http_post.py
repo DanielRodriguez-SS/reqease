@@ -3,8 +3,8 @@ import urllib.parse
 import ssl
 import certifi
 import json
-from data_classes import Response
-from response_processor import ResponseProcessor
+from .data_classes import Response
+from .response_processor import ResponseProcessor
 
 class Post(ResponseProcessor):
     """

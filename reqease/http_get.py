@@ -1,8 +1,8 @@
 import urllib.request
 import ssl
 import certifi
-from data_classes import Response
-from response_processor import ResponseProcessor
+from .data_classes import Response
+from .response_processor import ResponseProcessor
 
 class Get(ResponseProcessor):
     """
