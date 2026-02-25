@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='reqease',
-    version='0.1.3',
+    version='0.1.4',
     description='Reqease is a lean and clean library for performing basic HTTP operations with minimal overhead, designed to simplify common tasks like GET and POST requests',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',

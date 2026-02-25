@@ -32,9 +32,10 @@ class Get(ResponseProcessor):
         `_make_request() -> Response`:
             Sends the GET request and returns the processed response.
     """
-    def __init__(self, url: str, headers: dict | None = None) -> None:
+    def __init__(self, url: str, headers: dict | None = None, verify: bool | None = True) -> None:
         self.url = url
         self.headers = headers
+        self.verify = verify
         self.response = self._make_request()
 
     def _make_request(self) -> Response:
@@ -60,8 +61,11 @@ class Get(ResponseProcessor):
             for key, value in self.headers.items():
                 request.add_header(key, value)
 
-        # Create a secure SSL context    
-        context = ssl.create_default_context(cafile=certifi.where())
+        # Create a secure SSL context
+        if self.verify:
+            context = ssl.create_default_context(cafile=certifi.where())
+        else:
+            context = ssl._create_unverified_context()
 
         # Send the reuest and retreive the response
         with urllib.request.urlopen(request, context=context) as response:

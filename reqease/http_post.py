@@ -41,7 +41,7 @@ class Post(ResponseProcessor):
         `ValueError`:
             If the data cannot be encoded properly.
     """
-    def __init__(self, url: str, data: dict, headers: dict | None = None) -> None:
+    def __init__(self, url: str, data: dict, headers: dict | None = None, verify: bool | None = True) -> None:
         self.url = url
         self.data = data
         self.headers = headers
@@ -75,7 +75,10 @@ class Post(ResponseProcessor):
                 request.add_header(key, value)
         
         # Create a secure SSL context
-        context = ssl.create_default_context(cafile=certifi.where())
+        if self.verify:
+            context = ssl.create_default_context(cafile=certifi.where())
+        else:
+            context = ssl._create_unverified_context()
 
         # Send the request and retreive response
         with urllib.request.urlopen(request, context=context) as response:
